@@ -13,11 +13,11 @@ public class RockPaperScissors {
     }
 
     public static void saveOpponentDecision(int opponentDecision){
-
+        //NEED TO STORE LAST OPPONENT MOVE INTO CSV FILE
     }
 
     public static void saveOurDecision(int ourDecision){
-
+        //NEED TO STORE OUR LAST MOVE INTO CSV FILE
     }
 
     public static int opponentFunction(){
@@ -114,6 +114,7 @@ public class RockPaperScissors {
         }
 
         double counter = 0;
+        //NEED TO FIGURE OUT HOW TO FIND TOTAL ENTRIES IN FILE
         double total;
         double consistencyValue = 0;
         while (file2.hasNext()){
