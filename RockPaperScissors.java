@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RockPaperScissors {
@@ -19,32 +20,29 @@ public class RockPaperScissors {
         writer2.flush();
         writer2.close();
 
-
         System.exit(finalDecision(opponentFunction()));
     }
 
-    Scanner fileScan = new Scanner("player.csv");
-    int[] array = new array[];
-        for(int row = 0; row < NUMBER_STATES; row++){
-        array[row] = fileScan.next();
-        fileScan.nextLine();
-    }
-
-
-
     public static int opponentFunction(){
         Scanner fileScan = new Scanner("opponents.csv");
+        ArrayList<Integer> opponentData = new ArrayList<>();
+
+        while(fileScan.hasNext())
+        {
+            opponentData.add(Integer.parseInt(fileScan.next()));
+        }
+        fileScan.close();
+
         int predicted = 0;
         double counter = 0;
-        //NEED TO FIGURE OUT HOW TO FIND TOTAL ENTRIES IN FILE
-        double total;
+
         double rockValue = 0, paperValue = 0, scissorValue = 0;
 
-        while (file1.hasNext()){
-            int move = file1.next();
+        for(int j = 0; j < opponentData.size(); j++){
+            int move = opponentData.get(j);
             counter++;
 
-            if(counter/total <= 0.2){
+            if(counter/opponentData.size() <= 0.2){
                 if(move == 0){
                     rockValue+= 0.2;
                 }
@@ -55,7 +53,7 @@ public class RockPaperScissors {
                     scissorValue += 0.2;
                 }
             }
-            else if(counter/total <= 0.4 && counter/total > 0.2){
+            else if(counter/opponentData.size() <= 0.4 && counter/opponentData.size() > 0.2){
                 if(move == 0){
                     rockValue+= 0.4;
                 }
@@ -66,7 +64,7 @@ public class RockPaperScissors {
                     scissorValue += 0.4;
                 }
             }
-            else if(counter/total <= 0.6 && counter/total > 0.4){
+            else if(counter/opponentData.size() <= 0.6 && counter/opponentData.size() > 0.4){
                 if(move == 0){
                     rockValue+= 0.6;
                 }
@@ -77,7 +75,7 @@ public class RockPaperScissors {
                     scissorValue += 0.6;
                 }
             }
-            else if(counter/total <= 0.8 && counter/total > 0.6){
+            else if(counter/opponentData.size() <= 0.8 && counter/opponentData.size() > 0.6){
                 if(move == 0){
                     rockValue+= 0.8;
                 }
@@ -88,7 +86,7 @@ public class RockPaperScissors {
                     scissorValue += 0.8;
                 }
             }
-            else if(counter/total <= 1 && counter/total > 0.8){
+            else if(counter/opponentData.size() <= 1 && counter/opponentData.size() > 0.8){
                 if(move == 0){
                     rockValue+= 1;
                 }
@@ -115,6 +113,16 @@ public class RockPaperScissors {
     }
 
     public static int finalDecision(int predictedOpponentDecision){
+        Scanner fileScan = new Scanner("player.csv");
+        ArrayList<Integer> playerData = new ArrayList<Integer>();
+
+        while(fileScan.hasNext())
+        {
+            playerData.add(Integer.parseInt(fileScan.next()));
+        }
+        fileScan.close();
+
+
         int ourMove = 0;
         if(predictedOpponentDecision == 0){
             ourMove = 1;
@@ -127,19 +135,17 @@ public class RockPaperScissors {
         }
 
         double counter = 0;
-        //NEED TO FIGURE OUT HOW TO FIND TOTAL ENTRIES IN FILE
-        double total;
         double consistencyValue = 0;
-        while (file2.hasNext()){
-            int move = file2.next();
+        for(int j = 0; j < playerData.size(); j++) {
+            int move = playerData.get(j);
             counter++;
 
-            if(counter/total > 0.8 && move == ourMove){
+            if(counter/playerData.size() > 0.8 && move == ourMove){
                 consistencyValue++;
             }
         }
 
-        if(consistencyValue/(total/5) > 0.9){
+        if(consistencyValue/((playerData.size()/5)) > 0.9){
             ourMove = predictedOpponentDecision;
         }
         return ourMove;
