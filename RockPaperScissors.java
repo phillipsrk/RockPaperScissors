@@ -1,26 +1,39 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class RockPaperScissors {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         int ourLastMove = Integer.parseInt(args[0]);
         int theirLastMove = Integer.parseInt(args[1]);
 
-        saveOpponentDecision(theirLastMove);
-        saveOurDecision(ourLastMove);
-        //rock = 0
-        //paper = 1
-        //scissors = 2
+        FileWriter writer1 = new FileWriter("opponents.csv");
+        writer1.append((char) theirLastMove);
+
+        writer1.flush();
+        writer1.close();
+
+        FileWriter writer2 = new FileWriter("player.csv");
+        writer2.append((char) ourLastMove);
+
+        writer2.flush();
+        writer2.close();
+
 
         System.exit(finalDecision(opponentFunction()));
     }
 
-    public static void saveOpponentDecision(int opponentDecision){
-        //NEED TO STORE LAST OPPONENT MOVE INTO CSV FILE
+    Scanner fileScan = new Scanner("player.csv");
+    int[] array = new array[];
+        for(int row = 0; row < NUMBER_STATES; row++){
+        array[row] = fileScan.next();
+        fileScan.nextLine();
     }
 
-    public static void saveOurDecision(int ourDecision){
-        //NEED TO STORE OUR LAST MOVE INTO CSV FILE
-    }
+
 
     public static int opponentFunction(){
+        Scanner fileScan = new Scanner("opponents.csv");
         int predicted = 0;
         double counter = 0;
         //NEED TO FIGURE OUT HOW TO FIND TOTAL ENTRIES IN FILE
